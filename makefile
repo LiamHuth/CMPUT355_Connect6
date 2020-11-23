@@ -1,9 +1,9 @@
-MODULES = main
+MODULES = main ConnectGame Board userPlayer randomPlayer utils
 OBJ = $(patsubst %, obj/%.o, $(MODULES))
 TARGET = program
 
 CXX = g++
-CXXFLAGS = -O2 -Wall
+CXXFLAGS = -O2 -Wall -std=c++11
 
 compile: $(OBJ)
 	$(CXX) $(CXXFLAGS) $(OBJ) -o $(TARGET)

@@ -1,9 +1,15 @@
 #include <iostream>
+#include "ConnectGame.h"
 
 
 int main(int argc, char* argv[])
 {
-    std::cout << "Hello World!" << std::endl;
+    ConnectGame* game = new ConnectGame;
+    while (game->isGameOn()) {
+        game->start();
+    }
+
+    delete game;
 
     return 0;
 }
