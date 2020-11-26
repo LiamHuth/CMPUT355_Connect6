@@ -23,6 +23,9 @@ You can move your board cursor around the board with the "wasd" keys.
 w/s are used for up/down respectively, and a/d are used for left/right
 respectively.
 
+The program will automatically detect when one person has won and prompt
+the user for a decision to play again or exit the program.
+
 # Notes
 This program is only tested inside of the command line in MacOS. I expect
 it work in any Unix based shell, but it may have trouble in windows due to
