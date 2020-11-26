@@ -1,15 +1,22 @@
 #include "userPlayer.h"
 
-userPlayer::userPlayer(Board &gameBoard, int id) : currentBoard(gameBoard) {
+/*
+userPlayer Class:
+    Player child class that implements UI in order to play connect 6.
+*/
+
+// constructor
+userPlayer::userPlayer(Board &gameBoard, int id) : Player(gameBoard, id) {
     cursorPos = 0;
     UIcursorPos = 0;
     candidate1Pos = -1;
     candidate2Pos = -1;
-    playerId = id;
 
     pColor = currentBoard.getColor(id);
 }
 
+
+// draws user UI to screen
 void userPlayer::updateUI() {
     // clear screen
     system("clear");
@@ -29,8 +36,9 @@ void userPlayer::updateUI() {
     }
 }
 
-void userPlayer::makeFirstMove(int* move) {
 
+// Gets one move from the user
+void userPlayer::makeFirstMove(int* move) {
     int input;
     bool candidateChosen = false;
     while (!candidateChosen) {
@@ -74,8 +82,9 @@ void userPlayer::makeFirstMove(int* move) {
     UIcursorPos = 0;
 }
 
-void userPlayer::makeMoves(int* moves) {
 
+// gets two moves from the user
+void userPlayer::makeMoves(int* moves) {
     int input;
     bool candidatesChosen = false;
     while (!candidatesChosen) {
@@ -129,6 +138,7 @@ void userPlayer::makeMoves(int* moves) {
 }
 
 
+// updates cursor based on char input (wasd)
 void userPlayer::updateCursor(char input) {
     // up
     if (input == 'w') {
