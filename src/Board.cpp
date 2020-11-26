@@ -2,12 +2,22 @@
 
 // Board constructor: allocates and initializes board array
 Board::Board() {
-    boardValues = new char[361];
-    for (int i = 0; i < 361; i++) { boardValues[i] = '.'; }
 
     lastMoves = new int[2];
     lastMoves[0] = -1;
     lastMoves[1] = -1;
+
+    // initialize colors
+    p1Color = 36;
+    p1Piece = 'X';
+    p2Color = 97;
+    p2Piece = 'X';
+    candidateColor = 95;
+
+    // allocate initial board values
+    boardValues = new char[361];
+    for (int i = 0; i < 361; i++) { boardValues[i] = '.'; }
+
 }
 
 
@@ -28,6 +38,12 @@ char Board::getValue(int x, int y) {
         return boardValues[0];
     }
     return boardValues[x * 19 + y];
+}
+
+// returns the char value of a position of the board, single index
+char Board::getValueSingle(int pos) {
+    if (pos < 0 || pos > 360) { return 0; }
+    return boardValues[pos];
 }
 
 // determins if move is valid. Returns true if it is, false otherwise
@@ -64,6 +80,22 @@ void Board::reset() {
     isDecided = false;
 }
 
+
+// sets colorblind colors
+void Board::colorblind() {
+    p1Color = 92;
+    p2Color = 35;
+    p2Piece = 'O';
+    candidateColor = 97;
+}
+
+// fetches UI colors for players classes, id is player id
+int Board::getColor(int id) {
+    if (id == 0) { return p1Color; }
+    return p2Color;
+}
+
+
 void Board::printBoard(int cursorPos, int candidate1, int candidate2) {
 
     char val;
@@ -71,24 +103,25 @@ void Board::printBoard(int cursorPos, int candidate1, int candidate2) {
     for (int i = 0; i < 19; i++) {
         for (int j = 0; j < 19; j++) {
             index++;
+
             // cursor background
             if (cursorPos == index) { printf("\033[100m"); }
 
             // check if it is temporary value
             if (candidate1 == index || candidate2 == index) {
-                printf("\033[1;95m%c\033[0m ", 'x');
+                printf("\033[1;%dm%c\033[0m ", candidateColor, 'x');
                 continue;
             }
-
+            //printf("\n%d, %d:", i, j);
             // print appropriate data
-            val = this->getValue(i, j);
+            val = getValue(i, j);
 
             switch (val) {
                 case '0':
-                    printf("\033[1;36m%c\033[0m ", 'X');
+                    printf("\033[1;%dm%c\033[0m ", p1Color, p1Piece);
                     break;
                 case '1':
-                    printf("\033[1;97m%c\033[0m ", 'X');
+                    printf("\033[1;%dm%c\033[0m ", p2Color, p2Piece);
                     break;
                 case '.':
                     printf("\033[1;90m%c\033[0m ", '.');

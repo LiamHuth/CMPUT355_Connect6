@@ -1,6 +1,6 @@
 MODULES = main ConnectGame Board userPlayer randomPlayer utils
 OBJ = $(patsubst %, obj/%.o, $(MODULES))
-TARGET = program
+TARGET = connect6
 
 CXX = g++
 CXXFLAGS = -O2 -Wall -std=c++11

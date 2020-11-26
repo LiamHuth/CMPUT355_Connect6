@@ -9,9 +9,7 @@ void randomPlayer::updateUI() {
 }
 
 void randomPlayer::makeFirstMove(int* move) {
-    do {
-        move[0] = rand() % 361;
-    } while (!currentBoard.isValidMove(move[0]));
+    move[0] = rand() % 361;
 }
 
 void randomPlayer::makeMoves(int* moves) {

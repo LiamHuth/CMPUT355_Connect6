@@ -23,6 +23,11 @@ bool ConnectGame::isGameOn() {
         return gameOn;
 }
 
+// updates the colorblind flag
+void ConnectGame::colorblindMode() {
+    boardState.colorblind();
+}
+
 
 void ConnectGame::start() {
     // for UI
@@ -104,7 +109,8 @@ void ConnectGame::start() {
         // refresh screen
         system("clear");
         boardState.printBoard(-1, -1, -1);
-        printf("\n\033[1;%smPlayer %d Wins!\033[0m\n", (turn ? "97" : "36"), turn+1);
+        printf( "\n\033[1;%dmPlayer %d Wins!\033[0m\n",
+                boardState.getColor(turn), turn+1);
 
         // print options
         printf("%sPlay Again\n", (exitCursor ? "  " : "> "));

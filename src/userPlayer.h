@@ -21,5 +21,7 @@ private:
     int candidate2Pos;
     Board& currentBoard;
 
+    int pColor;
+
     void updateCursor(char input);
 };

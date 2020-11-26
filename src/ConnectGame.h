@@ -20,6 +20,9 @@ public:
     // checks if game is running
     bool isGameOn();
 
+    // sets the state of colorblind mode (true = on, false = off)
+    void colorblindMode();
+
 private:
     // used to save state of original terminal
     struct termios oldterminal;

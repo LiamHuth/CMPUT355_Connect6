@@ -6,11 +6,11 @@ userPlayer::userPlayer(Board &gameBoard, int id) : currentBoard(gameBoard) {
     candidate1Pos = -1;
     candidate2Pos = -1;
     playerId = id;
+
+    pColor = currentBoard.getColor(id);
 }
 
 void userPlayer::updateUI() {
-
-
     // clear screen
     system("clear");
 
@@ -21,8 +21,7 @@ void userPlayer::updateUI() {
     const char* textUI[2] = {"Place/Remove", "Submit"};
 
     // Header
-    printf("\n\033[1;%smPlayer %d's Turn\033[0m\n",
-            (playerId == 0 ? "36" : "97"), playerId+1);
+    printf("\n\033[1;%dmPlayer %d's Turn\033[0m\n", pColor, playerId+1);
 
     // Menu options
     for (int i = 0; i < 2; i++) {
