@@ -1,6 +1,14 @@
 #pragma once
 #include <iostream>
 
+/*
+Board Class:
+    Used by ConnectGame to manage the board state.
+    Used by Player Classes to access the board state and print the board
+    to screen.
+    Also determines if moves have resulted in a win
+*/
+
 class Board {
 public:
     Board();
@@ -10,10 +18,7 @@ public:
     // gets value of board at (x, y)
     char getValue(int x, int y);
 
-    // gets value of board at board[pos]
-    char getValueSingle(int pos);
-
-    // sets value of board
+    // sets value of board at one or two positions
     int setValue(int* moves, char value, int count);
 
     // returns whether or not game result has been decided
@@ -25,7 +30,7 @@ public:
     // prints board to terminal
     void printBoard(int cursorPos, int candidate1, int candidate2);
 
-    // returns true if move is valid, false otherwise
+    // returns true if move is valid, false otherwise, move is 1d index of array
     bool isValidMove(int move);
 
     // resets board for new game

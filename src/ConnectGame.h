@@ -8,10 +8,16 @@
 #include "randomPlayer.h"
 #include "utils.h"
 
+/*
+ConnectGame Class:
+    Main game class, used for control of game, manages board state and players
+*/
+
+
 class ConnectGame {
 public:
-    ConnectGame();
 
+    ConnectGame();
     ~ConnectGame();
 
     // starts game loop
@@ -32,5 +38,4 @@ private:
 
     // game state
     bool gameOn;
-
 };

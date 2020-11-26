@@ -1,6 +1,13 @@
 #pragma once
 #include "Board.h"
 
+/*
+Player Class:
+    Abstract class for any player class that is run within ConnectGame.
+    Classes inheriting this class should have a constructor
+
+
+*/
 class Player {
 public:
 

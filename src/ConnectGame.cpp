@@ -1,5 +1,11 @@
 #include "ConnectGame.h"
 
+/*
+ConnectGame Class Implementation:
+    Main game class, used for control of game, manages board state and players
+*/
+
+// constructor
 ConnectGame::ConnectGame() {
 
     // allow stdin to write directly to program, avoid terminal buffer
@@ -13,15 +19,18 @@ ConnectGame::ConnectGame() {
 }
 
 
+// destructor
 ConnectGame::~ConnectGame() {
     // restore terminal settings
     tcsetattr(STDIN_FILENO, TCSANOW, &oldterminal);
 }
 
 
+// wrapper function, returns if game is still continuing
 bool ConnectGame::isGameOn() {
         return gameOn;
 }
+
 
 // updates the colorblind flag
 void ConnectGame::colorblindMode() {
@@ -29,18 +38,19 @@ void ConnectGame::colorblindMode() {
 }
 
 
+// main game loop and initialization of players
 void ConnectGame::start() {
-    // for UI
+    // variables for UI
     char input = 0;
     int exitCursor = 0;
     int playerChoiceCursor = 0;
     int playerChoices[2] = {-1, -1};
-    int numTypesPlayers = 2;
 
-    // get info on what type of players are involved
+    // MODIFY THESE LINES IF ADDING PLAYER TYPES
+    int numTypesPlayers = 2;
     char options[2][10] = {"Human", "Random"};
 
-    // player choice UI
+    // UI for allowing user to decide player types
     while (playerChoices[1] == -1) {
         system("clear");
         printf("\033[1mPlayer %d:\033[0m\n", (playerChoices[0] == -1 ? 1 : 2));
@@ -69,6 +79,7 @@ void ConnectGame::start() {
     }
 
     // initialize players
+    // ADD CASE TO SWITCH STATEMENT IF ADDING ANOTHER PLAYER
     Player* Players[2] = { nullptr };
     for (int i = 0; i < 2; i++) {
         switch (playerChoices[i]) {
@@ -103,7 +114,7 @@ void ConnectGame::start() {
 
     } while (!boardState.decided());
 
-    // Game over UI
+    // UI for handling end of game
     input = 0;
     while (input != '\n') {
         // refresh screen
@@ -123,12 +134,12 @@ void ConnectGame::start() {
         if (input == '\t') { exitCursor = (exitCursor + 1) % 2; }
     }
 
-    // exit
+    // if user has selected exit
     if (exitCursor == 1) {
         gameOn = false;
         system("clear");
     }
-    // new game
+    // if user would like to start a new game
     else { boardState.reset(); }
 
     delete Players[0];

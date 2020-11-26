@@ -2,6 +2,11 @@
 #include <string>
 #include "ConnectGame.h"
 
+/*
+main:
+    Handles Flags, instantiates a connectGame object, and plays game
+    while the player wishes to continue.
+*/
 
 int main(int argc, char* argv[])
 {
@@ -21,6 +26,7 @@ int main(int argc, char* argv[])
         game->start();
     }
 
+    // clean up
     delete game;
     return 0;
 }

@@ -1,6 +1,15 @@
 #include "Board.h"
 
-// Board constructor: allocates and initializes board array
+/*
+Board Class:
+    Used by ConnectGame to manage the board state.
+    Used by Player Classes to access the board state and print the board
+    to screen.
+    Also determines if moves have resulted in a win
+*/
+
+
+// constructor
 Board::Board() {
 
     lastMoves = new int[2];
@@ -21,16 +30,18 @@ Board::Board() {
 }
 
 
-// Board destructor: frees up memory
+// destructor
 Board::~Board() {
     delete boardValues;
     delete lastMoves;
 }
 
-// wrapper to return whether or not the game is done
+
+// wrapper function to return whether or not the game is done
 bool Board::decided() {
     return isDecided;
 }
+
 
 // returns the char value of a position of the board
 char Board::getValue(int x, int y) {
@@ -40,39 +51,40 @@ char Board::getValue(int x, int y) {
     return boardValues[x * 19 + y];
 }
 
-// returns the char value of a position of the board, single index
-char Board::getValueSingle(int pos) {
-    if (pos < 0 || pos > 360) { return 0; }
-    return boardValues[pos];
-}
 
-// determins if move is valid. Returns true if it is, false otherwise
+// determines if move is valid. Returns true if it is, false otherwise
 bool Board::isValidMove(int move) {
     if (boardValues[move] == '.') { return true; }
     return false;
 }
 
+
 // updates the board state: returns 1 if successful, 0 if not successful
 int Board::setValue(int* moves, char value, int count) {
 
+    // if first move is not valids
     if (!isValidMove(moves[0])) { return 0; }
 
+    // if first move is valid, assign value
     boardValues[moves[0]] = value;
     lastMoves[0] = moves[0];
 
-    // return if only one value is being updated
+    // exit if only one value is being updated
     if (count == 1) { return 1; }
 
+    // same logic applied to second value
     if (isValidMove(moves[1])) {
         boardValues[moves[1]] = value;
         lastMoves[1] = moves[1];
+        // check if the game is over as a result of the past moves
         checkGameOver();
         return 1;
     }
     return 0;
 }
 
-// reset board values
+
+// reset board values for new game
 void Board::reset() {
     for (int i = 0; i < 361; i++) { boardValues[i] = '.'; }
     lastMoves[0] = -1;
@@ -89,19 +101,23 @@ void Board::colorblind() {
     candidateColor = 97;
 }
 
+
 // fetches UI colors for players classes, id is player id
 int Board::getColor(int id) {
     if (id == 0) { return p1Color; }
     return p2Color;
 }
 
-
+// prints current board state to terminal
 void Board::printBoard(int cursorPos, int candidate1, int candidate2) {
 
     char val;
     int index = -1;
+
+    // for each position on the board
     for (int i = 0; i < 19; i++) {
         for (int j = 0; j < 19; j++) {
+            // 1d index of board values
             index++;
 
             // cursor background
@@ -112,8 +128,8 @@ void Board::printBoard(int cursorPos, int candidate1, int candidate2) {
                 printf("\033[1;%dm%c\033[0m ", candidateColor, 'x');
                 continue;
             }
-            //printf("\n%d, %d:", i, j);
-            // print appropriate data
+
+            // val determines what is printed to screen
             val = getValue(i, j);
 
             switch (val) {
@@ -133,6 +149,8 @@ void Board::printBoard(int cursorPos, int candidate1, int candidate2) {
     std::cout << "\n";
 }
 
+
+// logic to check if the most recent moves have won the game
 void Board::checkGameOver() {
 
     int posDiag, negDiag, horizontal, vertical, cmpIndex;
